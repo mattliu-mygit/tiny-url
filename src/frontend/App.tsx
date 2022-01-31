@@ -1,12 +1,14 @@
 import axios from "axios";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Toggle from "./Toggle";
 import { useTimeoutFn } from "react-use";
-import { Transition } from "@headlessui/react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "./Button";
 import Content from "./Content";
+const api = window.location.href.includes("localhost")
+  ? "http://localhost:3001/"
+  : "https://tiny-url-backend.herokuapp.com/";
 
 function App() {
   const [url, setUrl] = useState("");
@@ -20,7 +22,7 @@ function App() {
     const param = window.location.href.split("/")[3];
     if (param.length > 0)
       axios
-        .get("http://localhost:3001/" + param)
+        .get("api" + param)
         .then((res) => {
           if (res.data !== "none") window.location.href = res.data;
         })
@@ -34,7 +36,7 @@ function App() {
     event.preventDefault();
     if (url.length > 0)
       axios
-        .post("http://localhost:3001", { url })
+        .post(api, { url })
         .then((res) => {
           setShortened(res.data);
           setTimeout(() => {
