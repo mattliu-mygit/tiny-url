@@ -2,10 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./frontend/App";
 import reportWebVitals from "./frontend/reportWebVitals";
+import { ThemeProvider } from "./frontend/ThemeContext";
+import "./index.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider initialTheme={"dark"}>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -2,20 +2,41 @@ const express = require("express");
 const routes = express.Router();
 const URLMapping = require("./urlSchema");
 
-routes.route("/").get(async function (req, res) {
-  res.send("Hello World!");
+const convertToBase62 = (num) => {
+  let base62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let result = "";
+  while (num > 0) {
+    result = base62[num % 62] + result;
+    num = Math.floor(num / 62);
+  }
+  return result;
+};
+
+routes.route("/:id").get(async function (req, res) {
+  const id = req.params.id;
+  URLMapping.findOne({ urlID: id }).then((url) => {
+    if (url) {
+      res.status(200).send(url.url);
+    } else {
+      res.status(200).send("none");
+    }
+  });
 });
 
 routes.route("/").post(async function (req, res) {
-  console.log("success");
-  const url = req.body.url;
-  // TODO: check if url is null
-  URLMapping.countDocuments().then((count) => {
-    console.log(count);
-    URLMapping.create({}).then((resp) => {
-      res.status(200).send(count + 1);
-    });
-  });
+  let url = req.body.url;
+  const urlObject = await URLMapping.findOne({ url: url }).exec();
+  if (urlObject) {
+    res.status(200).send("http://localhost:3000/" + urlObject.urlID);
+  } else {
+    const count = await URLMapping.countDocuments();
+    const urlID = convertToBase62(count);
+    if (!url.includes("http://") && !url.includes("https://")) {
+      url = "https://" + url;
+    }
+    const resp = await URLMapping.create({ url: url, urlID: urlID });
+    res.status(200).send("http://localhost:3000/" + resp.urlID);
+  }
 });
 
 module.exports = routes;
