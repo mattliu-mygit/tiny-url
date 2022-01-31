@@ -19,7 +19,8 @@ function App() {
   let [, , resetIsShowing] = useTimeoutFn(() => setIsShowing(true), 500);
 
   useEffect(() => {
-    const param = window.location.href.split("/")[3];
+    const paramArr = window.location.href.split("/");
+    const param = paramArr[paramArr.length - 1];
     if (param.length > 0)
       axios
         .get("api" + param)
