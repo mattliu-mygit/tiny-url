@@ -39,7 +39,7 @@ function App() {
       axios
         .post(api, { url })
         .then((res) => {
-          setShortened(res.data);
+          setShortened(window.location.href + res.data);
           setTimeout(() => {
             setShowShortened(true);
             setReInput(false);

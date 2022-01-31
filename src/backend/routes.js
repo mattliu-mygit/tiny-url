@@ -2,10 +2,6 @@ const express = require("express");
 const routes = express.Router();
 const URLMapping = require("./urlSchema");
 
-const api = window.location.href.includes("localhost")
-  ? "http://localhost:3001/"
-  : "https://tiny-url-backend.herokuapp.com/";
-
 const convertToBase62 = (num) => {
   let base62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   let result = "";
@@ -31,7 +27,7 @@ routes.route("/").post(async function (req, res) {
   let url = req.body.url;
   const urlObject = await URLMapping.findOne({ url: url }).exec();
   if (urlObject) {
-    res.status(200).send(api + urlObject.urlID);
+    res.status(200).send(urlObject.urlID);
   } else {
     const count = await URLMapping.countDocuments();
     const urlID = convertToBase62(count);
@@ -39,7 +35,7 @@ routes.route("/").post(async function (req, res) {
       url = "https://" + url;
     }
     const resp = await URLMapping.create({ url: url, urlID: urlID });
-    res.status(200).send(api + resp.urlID);
+    res.status(200).send(resp.urlID);
   }
 });
 
