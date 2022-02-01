@@ -18,8 +18,10 @@
     "cors": "^2.8.5",
     "dotenv": "^14.3.2",
     "express": "^4.17.2",
+    "lodash.debounce": "^4.0.8",
     "mongoose": "^6.1.8",
     "react": "^17.0.2",
+    "react-debounce-input": "^3.2.5",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.1",
@@ -30,7 +32,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start":"node src/server.js",
+    "start": "node src/server.js",
     "frontend": "react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
@@ -58,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.6",
     "autoprefixer": "^10.4.2",
     "gh-pages": "^3.2.3",
     "postcss": "^8.4.5",

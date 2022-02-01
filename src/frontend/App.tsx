@@ -12,6 +12,7 @@ const api = window.location.href.includes("localhost")
 
 function App() {
   const [url, setUrl] = useState("");
+  const [id, setID] = useState("");
   const [shortened, setShortened] = useState("");
   const [isShowing, setIsShowing] = useState(false);
   const [showShortened, setShowShortened] = useState(false);
@@ -23,7 +24,7 @@ function App() {
     const tags = params.get("id");
     if (tags && tags.length > 0)
       axios
-        .get(api + tags)
+        .get(api + "id/" + tags)
         .then((res) => {
           if (res.data !== "none") window.location.href = res.data;
         })
@@ -33,24 +34,29 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (shortened.length > 0) {
+      setTimeout(() => {
+        setShowShortened(true);
+        setReInput(false);
+        toast.success("Shortened URL successfully!");
+      }, 900);
+    }
+  }, [shortened]);
+
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // perform fetch on url
     event.preventDefault();
-    if (url.length > 0)
+    if (url.length > 0 && id.length > 0)
       axios
-        .post(api, { url })
+        .post(api, { url, id })
         .then((res) => {
           setShortened(window.location.origin + "/tiny-url/?id=" + res.data);
-          setTimeout(() => {
-            setShowShortened(true);
-            setReInput(false);
-            toast.success("Shortened URL successfully!");
-          }, 900);
         })
         .catch((err) => {
           console.log("Error: ", err);
         });
-    else if (reInput) toast.error("Please enter something in the box!");
+    else if (reInput) toast.error("Please enter a valid url and id!");
   };
 
   const resetStates = () => {
@@ -67,21 +73,22 @@ function App() {
     <div className=" bg-white flex w-[100%] h-screen transition-all dark:bg-gray-800 ">
       <Toggle />
       <div className="absolute h-[75%] rounded-lg  mt-[5%] mb-[12.5%] w-[50%] mx-[25%] h-screen bg-gray-300 dark:bg-gray-900">
-        <div className="absolute w-full mt-20 flex">
+        <div className="absolute w-full mt-[10%] flex">
           <div className="mx-auto block mb-2 text-6xl font-thin text-transparent bg-clip-text bg-gradient-to-br from-purple-400 to-red-600 cursor-default flex flex-row">
             Shorten that URL!
           </div>
         </div>
         <form
           onSubmit={onFormSubmit}
-          className="absolute mt-44 flex flex-col w-full"
+          className="absolute top-[32.5%] flex flex-col w-full"
         >
           <Content
-            url={url}
             setUrl={setUrl}
             shortened={shortened}
             showShortened={showShortened}
             isShowing={isShowing}
+            setID={setID}
+            setShortened={setShortened}
           />
           <Button showShortened={showShortened} resetStates={resetStates} />
         </form>

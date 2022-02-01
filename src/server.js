@@ -9,10 +9,10 @@ app.use(express.json());
 app.use(require("./backend/routes"));
 
 // Global error handling
-app.use(function (err, _req, res) {
-  console.error(err.stack);
-  res.send(err);
-});
+// app.use(function (err, _req, res) {
+//   console.error(err.stack);
+//   res.send(err);
+// });
 
 // perform a database connection when the server starts
 dbo.connectToServer();

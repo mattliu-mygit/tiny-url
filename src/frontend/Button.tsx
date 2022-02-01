@@ -7,7 +7,7 @@ const Button: FC<{ showShortened: boolean; resetStates: Function }> = ({
 }) => {
   return (
     <>
-      <div className="absolute flex w-full top-28">
+      <div className="absolute flex w-full top-[90%]">
         <Transition
           as={Fragment}
           show={showShortened}
@@ -29,7 +29,7 @@ const Button: FC<{ showShortened: boolean; resetStates: Function }> = ({
         </Transition>
       </div>
 
-      <div className="absolute flex w-full top-28">
+      <div className="absolute flex w-full top-[90%]">
         <Transition
           as={Fragment}
           show={!showShortened}
