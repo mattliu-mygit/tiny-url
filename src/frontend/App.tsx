@@ -6,7 +6,6 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "./Button";
 import Content from "./Content";
-import { useParams } from "react-router-dom";
 const api = window.location.href.includes("localhost")
   ? "http://localhost:3001/"
   : "https://tiny-url-backend.herokuapp.com/";
@@ -17,14 +16,14 @@ function App() {
   const [isShowing, setIsShowing] = useState(false);
   const [showShortened, setShowShortened] = useState(false);
   const [reInput, setReInput] = useState(true);
-  let { id } = useParams();
   let [, , resetIsShowing] = useTimeoutFn(() => setIsShowing(true), 500);
 
   useEffect(() => {
-    console.log(id);
-    if (id && id.length > 0)
+    const params = new URLSearchParams(window.location.search);
+    const tags = params.get("id");
+    if (tags && tags.length > 0)
       axios
-        .get(api + id)
+        .get(api + tags)
         .then((res) => {
           if (res.data !== "none") window.location.href = res.data;
         })
@@ -41,7 +40,7 @@ function App() {
       axios
         .post(api, { url })
         .then((res) => {
-          setShortened(window.location.origin + "/" + res.data);
+          setShortened(window.location.origin + "/tiny-url/?id=" + res.data);
           setTimeout(() => {
             setShowShortened(true);
             setReInput(false);
