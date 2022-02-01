@@ -21,11 +21,11 @@ function App() {
   let [, , resetIsShowing] = useTimeoutFn(() => setIsShowing(true), 500);
 
   useEffect(() => {
+    console.log(id);
     if (id && id.length > 0)
       axios
         .get(api + id)
         .then((res) => {
-          console.log(res);
           if (res.data !== "none") window.location.href = res.data;
         })
         .catch((err) => {
@@ -41,7 +41,7 @@ function App() {
       axios
         .post(api, { url })
         .then((res) => {
-          setShortened(window.location.href + res.data);
+          setShortened(window.location.origin + "/" + res.data);
           setTimeout(() => {
             setShowShortened(true);
             setReInput(false);
