@@ -6,6 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "./Button";
 import Content from "./Content";
+import { useParams } from "react-router-dom";
 const api = window.location.href.includes("localhost")
   ? "http://localhost:3001/"
   : "https://tiny-url-backend.herokuapp.com/";
@@ -16,20 +17,21 @@ function App() {
   const [isShowing, setIsShowing] = useState(false);
   const [showShortened, setShowShortened] = useState(false);
   const [reInput, setReInput] = useState(true);
+  let { id } = useParams();
   let [, , resetIsShowing] = useTimeoutFn(() => setIsShowing(true), 500);
 
   useEffect(() => {
-    const paramArr = window.location.href.split("/");
-    const param = paramArr[paramArr.length - 1];
-    if (param.length > 0)
+    if (id && id.length > 0)
       axios
-        .get("api" + param)
+        .get(api + id)
         .then((res) => {
+          console.log(res);
           if (res.data !== "none") window.location.href = res.data;
         })
         .catch((err) => {
           console.log(err);
         });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
