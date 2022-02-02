@@ -37,7 +37,6 @@ const ShortenContent: FC<{
             setUrl(event.target.value);
           } else {
             setUrl("");
-            toast.error("This URL has already been shortened!");
             setShortened(window.location.origin + "/tiny-url/?id=" + res.data);
           }
         })
