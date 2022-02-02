@@ -39,9 +39,11 @@ function App() {
       setTimeout(() => {
         setShowShortened(true);
         setReInput(false);
-        toast.success("Shortened URL successfully!");
+        if (id.length > 0) toast.success("Shortened URL successfully!");
+        else toast.info("This URL has already been shortened!");
       }, 900);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shortened]);
 
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
