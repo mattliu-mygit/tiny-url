@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Toggle from "./Toggle";
+import Toggle from "./color-theme/Toggle";
 import { useTimeoutFn } from "react-use";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

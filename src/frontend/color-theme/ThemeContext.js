@@ -1,5 +1,8 @@
 import React, { useState, createContext } from "react";
 
+/**
+ * Gets initial light/dark theme
+ */
 const getInitialTheme = (_) => {
   if (typeof window !== "undefined" && window.localStorage) {
     const storedPrefs = window.localStorage.getItem("color-theme");
@@ -20,6 +23,11 @@ const getInitialTheme = (_) => {
 
 export const ThemeContext = createContext();
 
+/**
+ * Theme provider wrapper component to provide light/dark theme
+ * @param initialTheme initial dark/light theme
+ * @param children children components of app
+ */
 export const ThemeProvider = ({ initialTheme, children }) => {
   const [theme, setTheme] = useState(getInitialTheme);
 

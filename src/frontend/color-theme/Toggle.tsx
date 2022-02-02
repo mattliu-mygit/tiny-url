@@ -2,6 +2,9 @@ import React from "react";
 import { FaSun, FaMoon } from "react-icons/fa";
 import { ThemeContext } from "./ThemeContext";
 
+/**
+ * Toggle to switch between light and dark theme
+ */
 const Toggle = () => {
   const { theme, setTheme } = React.useContext(ThemeContext);
 

@@ -7,6 +7,14 @@ const api = window.location.href.includes("localhost")
   ? "http://localhost:3001/"
   : "https://tiny-url-backend.herokuapp.com/";
 
+/**
+ * Shorten URL form content
+ * @param shortened - the shortened url
+ * @param isShowing - whether the form is showing
+ * @param setID - setter for id
+ * @param setUrl - setter for url
+ * @param setShortened - setter for shortened url
+ */
 const ShortenContent: FC<{
   shortened: string;
   isShowing: boolean;
@@ -15,6 +23,11 @@ const ShortenContent: FC<{
   setShortened: Function;
 }> = ({ shortened, isShowing, setUrl, setID, setShortened }) => {
   const [sameID, setSameID] = useState<boolean>(false);
+
+  /**
+   * Handles change to the url input
+   * @param event the default input onChange event.
+   */
   const handleURLChange = (event: any) => {
     if (event.target.value.length > 0) {
       axios
@@ -34,6 +47,10 @@ const ShortenContent: FC<{
     }
   };
 
+  /**
+   * Handles changes to the ID input
+   * @param event the default input onChange event.
+   */
   const handleIDChange = (event: any) => {
     if (event.target.value.length > 0)
       axios.get(api + "id/" + event.target.value).then((res) => {

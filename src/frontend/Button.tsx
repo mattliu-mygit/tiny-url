@@ -1,6 +1,11 @@
 import { Transition } from "@headlessui/react";
 import { FC, Fragment } from "react";
 
+/**
+ * The button that switches between showing the shortened url and the form to shorten a url.
+ * @param showShortened Whether or not the shortened url should be shown.
+ * @param resetStates A function that resets the states of the form.
+ */
 const Button: FC<{ showShortened: boolean; resetStates: Function }> = ({
   showShortened,
   resetStates,

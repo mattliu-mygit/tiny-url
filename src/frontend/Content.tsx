@@ -3,6 +3,15 @@ import { FC, Fragment } from "react";
 import { toast } from "react-toastify";
 import ShortenContent from "./ShortenContent";
 
+/**
+ * The main content of the app.
+ * @param showShortened Whether the shortened content should be shown.
+ * @param shortened The shortened url.
+ * @param isShowing Whether the shortened url is showing.
+ * @param setID The function to set the id of the shortened url.
+ * @param setUrl A function to set the url state.
+ * @param setShortened A function to set the shortened url state.
+ */
 const Content: FC<{
   showShortened: boolean;
   shortened: string;
@@ -11,6 +20,9 @@ const Content: FC<{
   setUrl: Function;
   setShortened: Function;
 }> = ({ showShortened, shortened, isShowing, setUrl, setID, setShortened }) => {
+  /**
+   * Copies the shortened url to clipboard
+   */
   const copyText = () => {
     toast.success("Copied to clipboard!");
     navigator.clipboard.writeText(shortened);
